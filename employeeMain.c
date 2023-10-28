@@ -1,71 +1,98 @@
+//Compile using the following command: gcc employeeMain.c employeeTable.c employeeOne.c 
+
+ 
+
+//gcc employeeMain.c employeeTable.c employeeTwo.c 
+
+ 
+
 #include <string.h> 
 
 #include <stdlib.h> 
 
 #include "employee.h" 
 
-
 int main(void){ 
 
+    //defined in employeeSearchOne.c 
 
-PtrToEmployee searchEmployeeByNumber(const Employee table[], int sizeTable, long numberToFind); 
+    PtrToEmployee searchEmployeeByNumber(const Employee table[], int sizeTable, double numberToFind); 
 
-PtrToEmployee searchEmployeeByName(const Employee table[], int sizeTable, char * nameToFind); 
+    PtrToEmployee searchEmployeeByName(const Employee table[], int sizeTable, char * nameToFind); 
 
-PtrToEmployee searchEmployeeByPhoneNumber(const Employee table[], int sizeTable, char * targetPhoneNumber);
+    PtrToEmployee searchEmployeeByPhoneNumber(const Employee table[], int sizeTable, char * phoneNumberToFind);
 
-PtrToEmployee searchEmployeeBySalary(PtrToConstEmployee ptr, int tableSize, double targetSalary);
+    PtrToEmployee searchEmployeeBySalary(const Employee tablep[], int sizeTable, double salaryToFind);
 
-extern Employee EmployeeTable[];
-
-extern const int EmployeeTableEntries;
-
-PtrToEmployee matchPtr;
-
-matchPtr = searchEmployeeByNumber(EmployeeTable, EmployeeTableEntries, 1045); 
-
-if (matchPtr != NULL) 
-
-printf("Employee ID 1045 is in record %ld\n", matchPtr - EmployeeTable); 
-
-else 
-
-printf("Employee ID is NOT found in the record\n"); 
 
  
 
-matchPtr = searchEmployeeByName(EmployeeTable, EmployeeTableEntries, "Tony Bobcat"); 
+    //defined in employeeTable.c 
 
-if (matchPtr != NULL) 
+    extern Employee EmployeeTable[];     
 
-printf("Employee Tony Bobcat is in record %ld\n", matchPtr - EmployeeTable); 
+    extern const int EmployeeTableEntries;      
 
-else 
+ 
 
-printf("Employee Tony Bobcat is NOT found in the record\n"); 
+    PtrToEmployee matchPtr;  //Declaration 
 
+    matchPtr = searchEmployeeByNumber(EmployeeTable, EmployeeTableEntries, 1045); 
 
+ 
 
+    //Example not found 
 
-char searchPhoneNumber[] = "909-555-1235";
-    matchPtr = searchEmployeeByPhoneNumber(EmployeeTable, EmployeeTableEntries, searchPhoneNumber);
+    if (matchPtr != NULL) 
 
- if (matchPtr != NULL)
-        printf("Employee with Phone Number '909-555-1235' is found at index %ld\n", matchPtr - EmployeeTable);
- else
-        printf("Employee with Phone Number '909-555-1235' is NOT found in the record\n");
+        printf("Employee ID 1045 is in record %ld\n", matchPtr - EmployeeTable); 
 
+    else 
 
+        printf("Employee ID is NOT found in the record\n"); 
 
+ 
 
-double searchSalary = 7.80;
-matchPtr = searchEmployeeBySalary(EmployeeTable, EmployeeTableEntries, searchSalary);
+    //Example found 
 
-if (matchPtr != NULL)
-    printf("Employee with Salary $%.2f is found at index %ld\n", searchSalary, matchPtr - EmployeeTable);
-else
-    printf("Employee with Salary $%.2f is NOT found in the record\n", searchSalary);
+    matchPtr = searchEmployeeByName(EmployeeTable, EmployeeTableEntries, "Tony Bobcat"); 
 
+    if (matchPtr != NULL) 
 
+        printf("Employee Tony Bobcat is in record %ld\n", matchPtr - EmployeeTable); 
 
-}
+    else 
+
+        printf("Employee Tony Bobcat is NOT found in the record\n"); 
+
+    // Example: Search by phone number (not found)
+    matchPtr = searchEmployeeByPhoneNumber(EmployeeTable, EmployeeTableEntries, "123-456-7890");
+    if (matchPtr != NULL)
+        printf("Employee with phone number 123-456-7890 is in record %ld\n", matchPtr - EmployeeTable);
+    else
+        printf("Employee with phone number 123-456-7890 is NOT found in the record\n");
+
+    // Example: Search by phone number (found)
+    matchPtr = searchEmployeeByPhoneNumber(EmployeeTable, EmployeeTableEntries, "909-555-2134");
+    if (matchPtr != NULL)
+        printf("Employee with phone number 909-555-2134 is in record %ld\n", matchPtr - EmployeeTable);
+    else
+        printf("Employee with phone number 909-555-2134 is NOT found in the record\n");
+
+    // Example: Search by salary (not found)
+    matchPtr = searchEmployeeBySalary(EmployeeTable, EmployeeTableEntries, 4.30);
+    if (matchPtr != NULL)
+        printf("Employee with salary 4.30 is in record %ld\n", matchPtr - EmployeeTable);
+    else
+        printf("Employee with salary 4.30 is NOT found in the record\n");
+
+    // Example: Search by salary (found)
+    matchPtr = searchEmployeeBySalary(EmployeeTable, EmployeeTableEntries, 7.80);
+    if (matchPtr != NULL)
+        printf("Employee with salary 7.80 is in record %ld\n", matchPtr - EmployeeTable);
+    else
+        printf("Employee with salary 7.80 is NOT found in the record\n");
+
+    return EXIT_SUCCESS; 
+
+} 
